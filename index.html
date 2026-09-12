@@ -226,28 +226,30 @@
   }
   .hero-cover{
     position:relative;
-    height:clamp(300px,42vw,480px);
-    display:flex; align-items:center; justify-content:center;
+    height:min(78vh,720px);
+    min-height:440px;
     overflow:hidden;
     margin-bottom:clamp(40px,6vw,64px);
   }
   .hero-photo{
     position:absolute; inset:0; z-index:0;
     background-image:
-      linear-gradient(0deg, var(--bg) 0%, rgba(14,12,11,.12) 18%, rgba(14,12,11,.12) 76%, var(--bg) 100%),
-      url('assets/hero-team.jpg?v=3');
+      linear-gradient(0deg, var(--bg) 0%, rgba(14,12,11,.1) 14%, rgba(14,12,11,.1) 80%, var(--bg) 100%),
+      url('assets/hero-team.jpg?v=4');
     background-size:cover, cover;
-    background-position:center, center 20%;
+    background-position:center, center 12%;
     background-repeat:no-repeat;
   }
   .hero-logo-big{
-    position:relative; z-index:1;
-    width:min(420px,56vw); height:auto;
+    position:absolute; z-index:1;
+    top:27%; left:50%;
+    transform:translate(-50%,-50%);
+    width:min(360px,58vw); height:auto;
     filter:drop-shadow(0 8px 28px rgba(0,0,0,.55));
   }
   @media (max-width:640px){
-    .hero-cover{ height:300px; margin-bottom:32px; }
-    .hero-logo-big{ width:min(280px,62vw); }
+    .hero-cover{ min-height:400px; margin-bottom:32px; }
+    .hero-logo-big{ width:min(240px,56vw); top:25%; }
   }
   .hero-numeral{
     position:absolute;
@@ -455,14 +457,6 @@
     background:rgba(14,12,11,.7);
     border:1px solid var(--line-strong);
     color:var(--khaki);
-  }
-  .ep-play{
-    position:absolute; z-index:1; right:10px; bottom:10px;
-    width:34px; height:34px; border-radius:50%;
-    border:1px solid rgba(245,241,234,.5);
-    display:flex; align-items:center; justify-content:center;
-    font-size:.7rem;
-    background:rgba(14,12,11,.35);
   }
   .ep-body{ padding:14px 16px 16px; display:flex; flex-direction:column; gap:4px; }
   .ep-num{
@@ -770,7 +764,6 @@
           <div class="ep-thumb">
             <span class="ep-tag">#11</span>
             <img src="assets/thumbs/ep11.jpg" alt="Sotaneada 11: La Banda de Carlitos y Euge Quevedo" loading="lazy">
-            <span class="ep-play" aria-hidden="true">▶</span>
           </div>
           <div class="ep-body">
             <p class="ep-num">40:53</p>
@@ -782,7 +775,6 @@
           <div class="ep-thumb">
             <span class="ep-tag">#10</span>
             <img src="assets/thumbs/ep10.jpg" alt="Sotaneada 10: Maximiliano Artista" loading="lazy">
-            <span class="ep-play" aria-hidden="true">▶</span>
           </div>
           <div class="ep-body">
             <p class="ep-num">29:20</p>
@@ -794,7 +786,6 @@
           <div class="ep-thumb">
             <span class="ep-tag">#9</span>
             <img src="assets/thumbs/ep09.jpg" alt="Sotaneada 9: El Toro Quevedo" loading="lazy">
-            <span class="ep-play" aria-hidden="true">▶</span>
           </div>
           <div class="ep-body">
             <p class="ep-num">33:17</p>
@@ -806,7 +797,6 @@
           <div class="ep-thumb">
             <span class="ep-tag">#8</span>
             <img src="assets/thumbs/ep08.jpg" alt="Sotaneada 8: Los Herrera" loading="lazy">
-            <span class="ep-play" aria-hidden="true">▶</span>
           </div>
           <div class="ep-body">
             <p class="ep-num">36:29</p>
@@ -818,7 +808,6 @@
           <div class="ep-thumb">
             <span class="ep-tag">#7</span>
             <img src="assets/thumbs/ep07.jpg" alt="Sotaneada 7: El Tano Romero" loading="lazy">
-            <span class="ep-play" aria-hidden="true">▶</span>
           </div>
           <div class="ep-body">
             <p class="ep-num">33:44</p>
@@ -830,7 +819,6 @@
           <div class="ep-thumb">
             <span class="ep-tag">#6</span>
             <img src="assets/thumbs/ep06.jpg" alt="Sotaneada 6: Cachumba" loading="lazy">
-            <span class="ep-play" aria-hidden="true">▶</span>
           </div>
           <div class="ep-body">
             <p class="ep-num">23:49</p>
@@ -842,7 +830,6 @@
           <div class="ep-thumb">
             <span class="ep-tag">#5</span>
             <img src="assets/thumbs/ep05.jpg" alt="Sotaneada 5: Dale Q' Va" loading="lazy">
-            <span class="ep-play" aria-hidden="true">▶</span>
           </div>
           <div class="ep-body">
             <p class="ep-num">42:23</p>
@@ -854,7 +841,6 @@
           <div class="ep-thumb">
             <span class="ep-tag">#4</span>
             <img src="assets/thumbs/ep04.jpg" alt="Sotaneada 4: Ale Ceberio" loading="lazy">
-            <span class="ep-play" aria-hidden="true">▶</span>
           </div>
           <div class="ep-body">
             <p class="ep-num">29:13</p>
@@ -866,7 +852,6 @@
           <div class="ep-thumb">
             <span class="ep-tag">#3</span>
             <img src="assets/thumbs/ep03.jpg" alt="Sotaneada 3: La Pepa Brizuela" loading="lazy">
-            <span class="ep-play" aria-hidden="true">▶</span>
           </div>
           <div class="ep-body">
             <p class="ep-num">37:50</p>
@@ -878,7 +863,6 @@
           <div class="ep-thumb">
             <span class="ep-tag">#2</span>
             <img src="assets/thumbs/ep02.jpg" alt="Sotaneada 2: Damián Córdoba" loading="lazy">
-            <span class="ep-play" aria-hidden="true">▶</span>
           </div>
           <div class="ep-body">
             <p class="ep-num">39:26</p>
@@ -890,7 +874,6 @@
           <div class="ep-thumb">
             <span class="ep-tag">#1</span>
             <img src="assets/thumbs/ep01.jpg" alt="Sotaneada 1: Chino Herrera" loading="lazy">
-            <span class="ep-play" aria-hidden="true">▶</span>
           </div>
           <div class="ep-body">
             <p class="ep-num">31:48</p>
