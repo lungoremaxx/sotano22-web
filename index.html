@@ -228,8 +228,9 @@
     position:relative;
     height:min(78vh,720px);
     min-height:440px;
+    max-width:520px;
+    margin:0 auto clamp(40px,6vw,64px);
     overflow:hidden;
-    margin-bottom:clamp(40px,6vw,64px);
   }
   .hero-photo{
     position:absolute; inset:0; z-index:0;
@@ -248,7 +249,7 @@
     filter:drop-shadow(0 8px 28px rgba(0,0,0,.55));
   }
   @media (max-width:640px){
-    .hero-cover{ min-height:400px; margin-bottom:32px; }
+    .hero-cover{ min-height:400px; max-width:none; margin:0 0 32px; }
     .hero-logo-big{ width:min(240px,56vw); bottom:20px; }
   }
   .hero-numeral{
