@@ -330,17 +330,41 @@
   }
   .section-link:hover{ border-color:var(--khaki); }
 
-  /* ---------- episodes bento ---------- */
-  .episode-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    grid-auto-rows:1fr;
-    grid-auto-flow:dense;
+  /* ---------- carousel shell (shared) ---------- */
+  .carousel{ position:relative; }
+  .carousel-track{
+    display:flex;
     gap:18px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    scroll-padding-left:4px;
+    padding-bottom:6px;
+    -ms-overflow-style:none;
+    scrollbar-width:none;
   }
+  .carousel-track::-webkit-scrollbar{ display:none; }
+  .car-nav{
+    position:absolute; top:44%; transform:translateY(-50%); z-index:3;
+    width:44px; height:44px;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(20,17,13,.88);
+    border:1px solid var(--line-strong);
+    color:var(--ink);
+    font-size:1.15rem;
+    cursor:pointer;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .car-nav:hover{ border-color:var(--khaki); color:var(--khaki); }
+  .car-prev{ left:-8px; }
+  .car-next{ right:-8px; }
+  @media (max-width:640px){ .car-nav{ display:none; } }
+
+  /* ---------- episodes carousel ---------- */
   .ep-card{
     position:relative;
     display:block;
+    flex:0 0 260px;
+    scroll-snap-align:start;
     text-decoration:none;
     color:var(--ink);
     background:var(--bg-raised);
@@ -349,14 +373,10 @@
     transition:border-color .2s ease, transform .2s cubic-bezier(.2,.8,.2,1);
   }
   .ep-card:hover{ border-color:var(--khaki); transform:translateY(-3px); }
-  .ep-card.featured{ grid-column:span 2; grid-row:span 2; }
-  @media (max-width:980px){
-    .episode-grid{ grid-template-columns:repeat(2,1fr); }
-    .ep-card.featured{ grid-column:span 2; grid-row:span 1; }
-  }
-  @media (max-width:600px){
-    .episode-grid{ grid-template-columns:1fr; }
-    .ep-card.featured{ grid-column:span 1; }
+  .ep-card.featured{ flex-basis:340px; }
+  @media (max-width:560px){
+    .ep-card{ flex-basis:78vw; }
+    .ep-card.featured{ flex-basis:82vw; }
   }
 
   .ep-thumb{
@@ -440,20 +460,25 @@
   .spotify-embed{ max-width:800px; }
   .spotify-embed iframe{ display:block; width:100%; }
 
-  /* ---------- gallery ---------- */
+  /* ---------- gallery carousel ---------- */
   .gallery-grid{
-    columns:4 220px;
-    column-gap:12px;
+    display:flex;
+    gap:12px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    padding-bottom:6px;
+    -ms-overflow-style:none;
+    scrollbar-width:none;
   }
-  @media (max-width:900px){ .gallery-grid{ columns:3 160px; } }
-  @media (max-width:560px){ .gallery-grid{ columns:2 140px; } }
+  .gallery-grid::-webkit-scrollbar{ display:none; }
   .gal-item{
-    display:block; width:100%; margin:0 0 12px;
+    display:block; flex:0 0 190px; height:250px; margin:0;
     padding:0; border:none; background:none; cursor:zoom-in;
-    break-inside:avoid; overflow:hidden; position:relative;
+    scroll-snap-align:start; overflow:hidden; position:relative;
   }
+  @media (max-width:560px){ .gal-item{ flex-basis:150px; height:200px; } }
   .gal-item img{
-    width:100%; display:block;
+    width:100%; height:100%; display:block; object-fit:cover;
     filter:saturate(.94) brightness(.94);
     transition:transform .35s cubic-bezier(.2,.8,.2,1), filter .3s ease;
   }
@@ -586,7 +611,6 @@
     <div class="wrap hero-grid">
       <div>
         <img class="hero-logo" src="assets/logo-blanco.png" alt="">
-        <p class="u-eyebrow">Streaming underground · Córdoba</p>
         <h1>Todo empieza<br>allá <span class="accent">abajo</span></h1>
         <p class="hero-lead">Sótano 22 es el streaming de Nico Sattler: cada jueves baja a un cantante de la movida tropical y cuartetera a tocar en vivo y a hablar sin libreto. Nada de show armado — acá es sesión.</p>
         <div class="cta-row">
@@ -633,7 +657,9 @@
         </div>
       </div>
 
-      <div class="episode-grid reveal">
+      <div class="carousel reveal">
+      <button class="car-nav car-prev" aria-label="Programas anteriores">‹</button>
+      <div class="carousel-track episode-grid" id="episode-track">
 
         <a class="ep-card featured" href="https://www.youtube.com/watch?v=tHlazaMFMJ0" target="_blank" rel="noopener">
           <div class="ep-thumb">
@@ -768,6 +794,8 @@
         </a>
 
       </div>
+      <button class="car-nav car-next" aria-label="Programas siguientes">›</button>
+      </div>
 
       <div class="episodes-footer reveal">
         <a class="section-link" href="https://www.youtube.com/@sotano22/videos" target="_blank" rel="noopener">Ver todos los programas en YouTube →</a>
@@ -817,7 +845,11 @@
           <p class="section-note">Lo que quedó de las sesiones. Tocá cualquier foto para verla grande.</p>
         </div>
       </div>
-      <div class="gallery-grid" id="gallery-grid"></div>
+      <div class="carousel reveal">
+      <button class="car-nav car-prev" aria-label="Fotos anteriores">‹</button>
+      <div class="carousel-track gallery-grid" id="gallery-grid"></div>
+      <button class="car-nav car-next" aria-label="Fotos siguientes">›</button>
+      </div>
     </div>
   </section>
 
@@ -961,6 +993,19 @@
 
   render();
   setInterval(render, 1000);
+
+  document.querySelectorAll('.carousel').forEach(function(car){
+    var track = car.querySelector('.carousel-track');
+    var prev = car.querySelector('.car-prev');
+    var next = car.querySelector('.car-next');
+    if (!track) return;
+    if (prev) prev.addEventListener('click', function(){
+      track.scrollBy({ left: -track.clientWidth * 0.85, behavior: 'smooth' });
+    });
+    if (next) next.addEventListener('click', function(){
+      track.scrollBy({ left: track.clientWidth * 0.85, behavior: 'smooth' });
+    });
+  });
 
   var GALLERY_COUNT = 50;
   var galleryGrid = document.getElementById('gallery-grid');
