@@ -220,39 +220,44 @@
   /* ---------- hero ---------- */
   .hero{
     position:relative;
-    padding-top:clamp(56px,10vw,104px);
     padding-bottom:clamp(40px,6vw,64px);
     overflow:hidden;
     border-bottom:1px solid var(--line);
   }
+  .hero-cover{
+    position:relative;
+    height:clamp(300px,42vw,480px);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+    margin-bottom:clamp(40px,6vw,64px);
+  }
   .hero-photo{
     position:absolute; inset:0; z-index:0;
     background-image:
-      linear-gradient(90deg, var(--bg) 0%, rgba(14,12,11,.88) 32%, rgba(14,12,11,.55) 58%, rgba(14,12,11,.15) 100%),
-      linear-gradient(0deg, var(--bg) 0%, rgba(14,12,11,.1) 30%, rgba(14,12,11,.1) 70%, var(--bg) 100%),
-      url('assets/hero-team.jpg?v=2');
-    background-size:cover, cover, cover;
-    background-position:center, center, center 12%;
+      linear-gradient(0deg, var(--bg) 0%, rgba(14,12,11,.12) 18%, rgba(14,12,11,.12) 76%, var(--bg) 100%),
+      url('assets/hero-team.jpg?v=3');
+    background-size:cover, cover;
+    background-position:center, center 20%;
     background-repeat:no-repeat;
   }
-  @media (max-width:920px){
-    .hero-photo{
-      background-image:
-        linear-gradient(180deg, rgba(14,12,11,.35) 0%, rgba(14,12,11,.75) 55%, var(--bg) 92%),
-        url('assets/hero-team.jpg?v=2');
-      background-size:cover, cover;
-      background-position:center, center 8%;
-    }
+  .hero-logo-big{
+    position:relative; z-index:1;
+    width:min(420px,56vw); height:auto;
+    filter:drop-shadow(0 8px 28px rgba(0,0,0,.55));
+  }
+  @media (max-width:640px){
+    .hero-cover{ height:300px; margin-bottom:32px; }
+    .hero-logo-big{ width:min(280px,62vw); }
   }
   .hero-numeral{
     position:absolute;
     right:clamp(-40px,-2vw,10px);
-    top:clamp(-40px,-2vw,-10px);
+    top:clamp(-16px,-1vw,0px);
     font-family:var(--font-display);
     font-size:clamp(14rem,32vw,30rem);
     line-height:.8;
     color:transparent;
-    -webkit-text-stroke:1.5px rgba(175,152,117,.25);
+    -webkit-text-stroke:1.5px rgba(175,152,117,.2);
     pointer-events:none;
     user-select:none;
     z-index:0;
@@ -269,7 +274,6 @@
     .hero-numeral{ display:none; }
   }
 
-  .hero-logo{ width:min(200px,50vw); height:auto; margin-bottom:22px; }
   .hero h1{
     font-size:clamp(2.7rem,6.6vw,4.9rem);
     line-height:.95;
@@ -390,19 +394,24 @@
   .carousel-track::-webkit-scrollbar{ display:none; }
   .car-nav{
     position:absolute; top:44%; transform:translateY(-50%); z-index:3;
-    width:44px; height:44px;
+    width:46px; height:46px; border-radius:50%;
     display:flex; align-items:center; justify-content:center;
-    background:rgba(20,17,13,.88);
+    background:rgba(20,17,13,.9);
     border:1px solid var(--line-strong);
     color:var(--ink);
-    font-size:1.15rem;
     cursor:pointer;
-    transition:border-color .15s ease, color .15s ease;
+    transition:border-color .15s ease, background .15s ease, transform .15s ease;
+    box-shadow:0 6px 18px -6px rgba(0,0,0,.5);
   }
-  .car-nav:hover{ border-color:var(--khaki); color:var(--khaki); }
+  .car-nav svg{ width:18px; height:18px; display:block; }
+  .car-nav:hover{ border-color:var(--accent); background:var(--bg-raised-2); transform:translateY(-50%) scale(1.06); }
   .car-prev{ left:-8px; }
   .car-next{ right:-8px; }
-  @media (max-width:640px){ .car-nav{ display:none; } }
+  @media (max-width:640px){
+    .car-nav{ width:38px; height:38px; }
+    .car-prev{ left:2px; }
+    .car-next{ right:2px; }
+  }
 
   /* ---------- episodes carousel ---------- */
   .ep-card{
@@ -418,10 +427,8 @@
     transition:border-color .2s ease, transform .2s cubic-bezier(.2,.8,.2,1);
   }
   .ep-card:hover{ border-color:var(--khaki); transform:translateY(-3px); }
-  .ep-card.featured{ flex-basis:340px; }
   @media (max-width:560px){
     .ep-card{ flex-basis:78vw; }
-    .ep-card.featured{ flex-basis:82vw; }
   }
 
   .ep-thumb{
@@ -430,7 +437,6 @@
     overflow:hidden;
     background:var(--bg-raised-2);
   }
-  .ep-card.featured .ep-thumb{ aspect-ratio:16/10; }
   .ep-thumb img{
     width:100%; height:100%; object-fit:cover;
     transition:transform .4s cubic-bezier(.2,.8,.2,1), filter .3s ease;
@@ -459,13 +465,40 @@
     background:rgba(14,12,11,.35);
   }
   .ep-body{ padding:14px 16px 16px; display:flex; flex-direction:column; gap:4px; }
-  .ep-card.featured .ep-body{ padding:18px 20px 20px; }
   .ep-num{
     font-family:var(--font-mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase;
-    color:var(--muted-dim);
+    color:var(--muted-dim); font-variant-numeric:tabular-nums;
   }
   .ep-title{ font-size:.98rem; }
-  .ep-card.featured .ep-title{ font-size:clamp(1.15rem,2vw,1.5rem); font-family:var(--font-display); letter-spacing:.01em; text-transform:uppercase; }
+
+  /* ---------- latest episode showcase ---------- */
+  .latest-ep{ margin-bottom:clamp(36px,5vw,52px); }
+  .latest-ep-grid{
+    display:grid; grid-template-columns:1.6fr 1fr;
+    gap:clamp(20px,3vw,32px);
+    background:var(--bg-raised); border:1px solid var(--line-strong);
+    padding:clamp(16px,2vw,22px);
+  }
+  .latest-ep-player{ position:relative; aspect-ratio:16/9; background:#000; }
+  .latest-ep-player iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .latest-ep-info{ display:flex; flex-direction:column; justify-content:center; gap:12px; }
+  .latest-ep-badge{
+    display:inline-block; width:fit-content;
+    font-family:var(--font-mono); font-size:.66rem; letter-spacing:.12em; text-transform:uppercase;
+    padding:4px 10px;
+    border:1px solid var(--line-strong); color:var(--khaki);
+  }
+  .latest-ep-info h3{
+    font-family:var(--font-display); font-weight:400;
+    font-size:clamp(1.4rem,2.6vw,2.1rem); text-transform:uppercase; line-height:1.05;
+  }
+  .latest-ep-info p{
+    font-family:var(--font-mono); font-size:.78rem; letter-spacing:.04em;
+    color:var(--muted); font-variant-numeric:tabular-nums;
+  }
+  @media (max-width:820px){
+    .latest-ep-grid{ grid-template-columns:1fr; }
+  }
 
   .episodes-footer{
     margin-top:22px; display:flex; justify-content:flex-end;
@@ -517,11 +550,11 @@
   }
   .gallery-grid::-webkit-scrollbar{ display:none; }
   .gal-item{
-    display:block; flex:0 0 190px; height:250px; margin:0;
+    display:block; flex:0 0 280px; height:370px; margin:0;
     padding:0; border:none; background:none; cursor:zoom-in;
     scroll-snap-align:start; overflow:hidden; position:relative;
   }
-  @media (max-width:560px){ .gal-item{ flex-basis:150px; height:200px; } }
+  @media (max-width:560px){ .gal-item{ flex-basis:220px; height:290px; } }
   .gal-item img{
     width:100%; height:100%; display:block; object-fit:cover;
     filter:saturate(.94) brightness(.94);
@@ -661,12 +694,14 @@
 <main id="main">
 
   <section class="hero" id="inicio">
-    <div class="hero-photo" aria-hidden="true"></div>
+    <div class="hero-cover">
+      <div class="hero-photo" aria-hidden="true"></div>
+      <img class="hero-logo-big" src="assets/logo-blanco.png" alt="Sótano 22">
+    </div>
     <p class="hero-numeral" aria-hidden="true">22</p>
 
     <div class="wrap hero-grid">
       <div>
-        <img class="hero-logo" src="assets/logo-blanco.png" alt="">
         <h1>Todo empieza<br>allá <span class="accent">abajo</span></h1>
         <p class="hero-lead">Sótano 22 es el streaming de Nico Sattler: cada jueves baja a un cantante de la movida tropical y cuartetera a tocar en vivo y a hablar sin libreto. Nada de show armado — acá es sesión.</p>
         <div class="cta-row">
@@ -709,148 +744,162 @@
         <div class="section-head-copy">
           <p class="u-eyebrow">Archivo</p>
           <h2>Las Sotaneadas</h2>
-          <p class="section-note">Cada jueves, un invitado nuevo. Así quedaron los últimos programas — la sesión completa está en YouTube.</p>
+          <p class="section-note">Cada jueves, un invitado nuevo. Mirá el programa completo o recorré el archivo.</p>
+        </div>
+      </div>
+
+      <div class="latest-ep reveal">
+        <p class="u-eyebrow" style="margin-bottom:16px;">Mirá la última Sotaneada</p>
+        <div class="latest-ep-grid">
+          <div class="latest-ep-player">
+            <iframe src="https://www.youtube.com/embed/x7Hi7knZQgo" title="Sotaneada #11: La Banda de Carlitos y Euge Quevedo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="latest-ep-info">
+            <span class="latest-ep-badge">Sotaneada #11</span>
+            <h3>La Banda de Carlitos y Euge Quevedo</h3>
+            <p>40:53 · Programa completo en YouTube</p>
+          </div>
         </div>
       </div>
 
       <div class="carousel reveal">
-      <button class="car-nav car-prev" aria-label="Programas anteriores">‹</button>
+      <button class="car-nav car-prev" aria-label="Programas anteriores"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <div class="carousel-track episode-grid" id="episode-track">
 
-        <a class="ep-card featured" href="https://www.youtube.com/watch?v=tHlazaMFMJ0" target="_blank" rel="noopener">
+        <a class="ep-card" href="https://www.youtube.com/watch?v=x7Hi7knZQgo" target="_blank" rel="noopener">
           <div class="ep-thumb">
-            <span class="ep-tag">Sotaneada #11</span>
+            <span class="ep-tag">#11</span>
             <img src="assets/thumbs/ep11.jpg" alt="Sotaneada 11: La Banda de Carlitos y Euge Quevedo" loading="lazy">
             <span class="ep-play" aria-hidden="true">▶</span>
           </div>
           <div class="ep-body">
-            <p class="ep-num">Sep 2026 · Último programa</p>
+            <p class="ep-num">40:53</p>
             <p class="ep-title">La Banda de Carlitos y Euge Quevedo</p>
           </div>
         </a>
 
-        <a class="ep-card" href="https://www.youtube.com/watch?v=Y5UWfxk53AU" target="_blank" rel="noopener">
-          <div class="ep-thumb">
-            <span class="ep-tag">#9</span>
-            <img src="assets/thumbs/ep09.jpg" alt="Sotaneada 9: El Toro Quevedo" loading="lazy">
-            <span class="ep-play" aria-hidden="true">▶</span>
-          </div>
-          <div class="ep-body">
-            <p class="ep-num">Ago 2026</p>
-            <p class="ep-title">El Toro Quevedo</p>
-          </div>
-        </a>
-
-        <a class="ep-card" href="https://www.youtube.com/watch?v=80g9m-CUVdk" target="_blank" rel="noopener">
-          <div class="ep-thumb">
-            <span class="ep-tag">#8</span>
-            <img src="assets/thumbs/ep08.jpg" alt="Sotaneada 8: Los Herrera" loading="lazy">
-            <span class="ep-play" aria-hidden="true">▶</span>
-          </div>
-          <div class="ep-body">
-            <p class="ep-num">Ago 2026</p>
-            <p class="ep-title">Los Herrera</p>
-          </div>
-        </a>
-
-        <a class="ep-card" href="https://www.youtube.com/watch?v=Kc9yiKSnXOc" target="_blank" rel="noopener">
-          <div class="ep-thumb">
-            <span class="ep-tag">#7</span>
-            <img src="assets/thumbs/ep07.jpg" alt="Sotaneada 7: El Tano Romero" loading="lazy">
-            <span class="ep-play" aria-hidden="true">▶</span>
-          </div>
-          <div class="ep-body">
-            <p class="ep-num">Ago 2026</p>
-            <p class="ep-title">El Tano Romero</p>
-          </div>
-        </a>
-
-        <a class="ep-card" href="https://www.youtube.com/watch?v=yWNxdUEtRnw" target="_blank" rel="noopener">
+        <a class="ep-card" href="https://www.youtube.com/watch?v=akyptOcqPlU" target="_blank" rel="noopener">
           <div class="ep-thumb">
             <span class="ep-tag">#10</span>
             <img src="assets/thumbs/ep10.jpg" alt="Sotaneada 10: Maximiliano Artista" loading="lazy">
             <span class="ep-play" aria-hidden="true">▶</span>
           </div>
           <div class="ep-body">
-            <p class="ep-num">Ago 2026</p>
+            <p class="ep-num">29:20</p>
             <p class="ep-title">Maximiliano Artista</p>
           </div>
         </a>
 
-        <a class="ep-card" href="https://www.youtube.com/watch?v=mpVY1iGowxo" target="_blank" rel="noopener">
+        <a class="ep-card" href="https://www.youtube.com/watch?v=o6Kz9N7-2xc" target="_blank" rel="noopener">
           <div class="ep-thumb">
-            <span class="ep-tag">#5</span>
-            <img src="assets/thumbs/ep05.jpg" alt="Sotaneada 5: Dale Q' Va" loading="lazy">
+            <span class="ep-tag">#9</span>
+            <img src="assets/thumbs/ep09.jpg" alt="Sotaneada 9: El Toro Quevedo" loading="lazy">
             <span class="ep-play" aria-hidden="true">▶</span>
           </div>
           <div class="ep-body">
-            <p class="ep-num">Ago 2026</p>
-            <p class="ep-title">Dale Q' Va</p>
+            <p class="ep-num">33:17</p>
+            <p class="ep-title">El Toro Quevedo</p>
           </div>
         </a>
 
-        <a class="ep-card" href="https://www.youtube.com/watch?v=h_mOPMnbtvI" target="_blank" rel="noopener">
+        <a class="ep-card" href="https://www.youtube.com/watch?v=SSaR61YTRuA" target="_blank" rel="noopener">
+          <div class="ep-thumb">
+            <span class="ep-tag">#8</span>
+            <img src="assets/thumbs/ep08.jpg" alt="Sotaneada 8: Los Herrera" loading="lazy">
+            <span class="ep-play" aria-hidden="true">▶</span>
+          </div>
+          <div class="ep-body">
+            <p class="ep-num">36:29</p>
+            <p class="ep-title">Los Herrera</p>
+          </div>
+        </a>
+
+        <a class="ep-card" href="https://www.youtube.com/watch?v=_xfNE3pwW2k" target="_blank" rel="noopener">
+          <div class="ep-thumb">
+            <span class="ep-tag">#7</span>
+            <img src="assets/thumbs/ep07.jpg" alt="Sotaneada 7: El Tano Romero" loading="lazy">
+            <span class="ep-play" aria-hidden="true">▶</span>
+          </div>
+          <div class="ep-body">
+            <p class="ep-num">33:44</p>
+            <p class="ep-title">El Tano Romero</p>
+          </div>
+        </a>
+
+        <a class="ep-card" href="https://www.youtube.com/watch?v=myCpTpnXlQs" target="_blank" rel="noopener">
           <div class="ep-thumb">
             <span class="ep-tag">#6</span>
             <img src="assets/thumbs/ep06.jpg" alt="Sotaneada 6: Cachumba" loading="lazy">
             <span class="ep-play" aria-hidden="true">▶</span>
           </div>
           <div class="ep-body">
-            <p class="ep-num">Ago 2026</p>
+            <p class="ep-num">23:49</p>
             <p class="ep-title">Cachumba</p>
           </div>
         </a>
 
-        <a class="ep-card" href="https://www.youtube.com/watch?v=DGEKZNwQ3e0" target="_blank" rel="noopener">
+        <a class="ep-card" href="https://www.youtube.com/watch?v=PAoR3jIbhp8" target="_blank" rel="noopener">
+          <div class="ep-thumb">
+            <span class="ep-tag">#5</span>
+            <img src="assets/thumbs/ep05.jpg" alt="Sotaneada 5: Dale Q' Va" loading="lazy">
+            <span class="ep-play" aria-hidden="true">▶</span>
+          </div>
+          <div class="ep-body">
+            <p class="ep-num">42:23</p>
+            <p class="ep-title">Dale Q' Va</p>
+          </div>
+        </a>
+
+        <a class="ep-card" href="https://www.youtube.com/watch?v=JR01kTGX5Qw" target="_blank" rel="noopener">
           <div class="ep-thumb">
             <span class="ep-tag">#4</span>
             <img src="assets/thumbs/ep04.jpg" alt="Sotaneada 4: Ale Ceberio" loading="lazy">
             <span class="ep-play" aria-hidden="true">▶</span>
           </div>
           <div class="ep-body">
-            <p class="ep-num">Ago 2026</p>
+            <p class="ep-num">29:13</p>
             <p class="ep-title">Ale Ceberio</p>
           </div>
         </a>
 
-        <a class="ep-card" href="https://www.youtube.com/watch?v=1YFc8ENIOPs" target="_blank" rel="noopener">
+        <a class="ep-card" href="https://www.youtube.com/watch?v=JPtI71EWNVA" target="_blank" rel="noopener">
           <div class="ep-thumb">
             <span class="ep-tag">#3</span>
             <img src="assets/thumbs/ep03.jpg" alt="Sotaneada 3: La Pepa Brizuela" loading="lazy">
             <span class="ep-play" aria-hidden="true">▶</span>
           </div>
           <div class="ep-body">
-            <p class="ep-num">Sep 2026</p>
+            <p class="ep-num">37:50</p>
             <p class="ep-title">La Pepa Brizuela</p>
           </div>
         </a>
 
-        <a class="ep-card" href="https://www.youtube.com/watch?v=sEqZeWum3Rw" target="_blank" rel="noopener">
+        <a class="ep-card" href="https://www.youtube.com/watch?v=1l4ES1pe6sM" target="_blank" rel="noopener">
           <div class="ep-thumb">
             <span class="ep-tag">#2</span>
             <img src="assets/thumbs/ep02.jpg" alt="Sotaneada 2: Damián Córdoba" loading="lazy">
             <span class="ep-play" aria-hidden="true">▶</span>
           </div>
           <div class="ep-body">
-            <p class="ep-num">Ago 2026</p>
+            <p class="ep-num">39:26</p>
             <p class="ep-title">Damián Córdoba</p>
           </div>
         </a>
 
-        <a class="ep-card" href="https://www.youtube.com/watch?v=7dB5iT9olxc" target="_blank" rel="noopener">
+        <a class="ep-card" href="https://www.youtube.com/watch?v=IWVoqGg7sEw" target="_blank" rel="noopener">
           <div class="ep-thumb">
             <span class="ep-tag">#1</span>
-            <img src="assets/thumbs/ep01.jpg" alt="Sotaneada 1: Q' Lokura" loading="lazy">
+            <img src="assets/thumbs/ep01.jpg" alt="Sotaneada 1: Chino Herrera" loading="lazy">
             <span class="ep-play" aria-hidden="true">▶</span>
           </div>
           <div class="ep-body">
-            <p class="ep-num">Programa piloto</p>
-            <p class="ep-title">Q' Lokura</p>
+            <p class="ep-num">31:48</p>
+            <p class="ep-title">Chino Herrera</p>
           </div>
         </a>
 
       </div>
-      <button class="car-nav car-next" aria-label="Programas siguientes">›</button>
+      <button class="car-nav car-next" aria-label="Programas siguientes"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
 
       <div class="episodes-footer reveal">
@@ -902,9 +951,9 @@
         </div>
       </div>
       <div class="carousel reveal">
-      <button class="car-nav car-prev" aria-label="Fotos anteriores">‹</button>
+      <button class="car-nav car-prev" aria-label="Fotos anteriores"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <div class="carousel-track gallery-grid" id="gallery-grid"></div>
-      <button class="car-nav car-next" aria-label="Fotos siguientes">›</button>
+      <button class="car-nav car-next" aria-label="Fotos siguientes"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
     </div>
   </section>
