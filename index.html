@@ -225,11 +225,15 @@
     overflow:hidden;
     border-bottom:1px solid var(--line);
   }
+  .hero-copy{
+    position:relative;
+    padding-bottom:clamp(20px,3vw,32px);
+  }
   .hero-photo{
-    position:absolute; inset:0; z-index:0;
+    position:absolute; inset:0; z-index:-1;
     background-image:
-      linear-gradient(90deg, var(--bg) 0%, rgba(14,12,11,.88) 32%, rgba(14,12,11,.55) 58%, rgba(14,12,11,.15) 100%),
-      linear-gradient(0deg, var(--bg) 0%, rgba(14,12,11,.1) 30%, rgba(14,12,11,.1) 70%, var(--bg) 100%),
+      linear-gradient(90deg, var(--bg) 0%, rgba(14,12,11,.88) 30%, rgba(14,12,11,.5) 62%, rgba(14,12,11,.1) 100%),
+      linear-gradient(0deg, var(--bg) 0%, rgba(14,12,11,.05) 22%, rgba(14,12,11,.05) 78%, var(--bg) 100%),
       url('assets/hero-team.jpg?v=2');
     background-size:cover, cover, cover;
     background-position:center, center, center 12%;
@@ -238,10 +242,10 @@
   @media (max-width:920px){
     .hero-photo{
       background-image:
-        linear-gradient(180deg, rgba(14,12,11,.35) 0%, rgba(14,12,11,.75) 55%, var(--bg) 92%),
+        linear-gradient(180deg, rgba(14,12,11,.3) 0%, rgba(14,12,11,.55) 70%, var(--bg) 100%),
         url('assets/hero-team.jpg?v=2');
       background-size:cover, cover;
-      background-position:center, center 8%;
+      background-position:center, center 10%;
     }
   }
   .hero-numeral{
@@ -661,11 +665,11 @@
 <main id="main">
 
   <section class="hero" id="inicio">
-    <div class="hero-photo" aria-hidden="true"></div>
     <p class="hero-numeral" aria-hidden="true">22</p>
 
     <div class="wrap hero-grid">
-      <div>
+      <div class="hero-copy">
+        <div class="hero-photo" aria-hidden="true"></div>
         <img class="hero-logo" src="assets/logo-blanco.png" alt="">
         <h1>Todo empieza<br>allá <span class="accent">abajo</span></h1>
         <p class="hero-lead">Sótano 22 es el streaming de Nico Sattler: cada jueves baja a un cantante de la movida tropical y cuartetera a tocar en vivo y a hablar sin libreto. Nada de show armado — acá es sesión.</p>
