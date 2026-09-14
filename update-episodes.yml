@@ -1,0 +1,35 @@
+name: Actualizar Sotaneadas
+
+on:
+  schedule:
+    # 01:00 UTC los lunes = 22:00 hora Argentina (UTC-3) los domingos
+    - cron: "0 1 * * 1"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Buscar nuevas Sotaneadas
+        run: node scripts/update-episodes.mjs
+
+      - name: Commitear y pushear si hay cambios
+        run: |
+          if git diff --quiet -- episodes.json; then
+            echo "Sin cambios."
+            exit 0
+          fi
+          git config user.name "sotano22-bot"
+          git config user.email "actions@github.com"
+          git add episodes.json
+          git commit -m "Actualiza episodes.json con nuevas Sotaneadas"
+          git push
