@@ -707,7 +707,7 @@
         <div class="stat-strip">
           <div class="stat"><b>235K</b><span>Seguidores IG</span></div>
           <div class="stat"><b>69,6K</b><span>Suscriptores YT</span></div>
-          <div class="stat"><b>11</b><span>Sotaneadas</span></div>
+          <div class="stat"><b id="stat-episodes">11</b><span>Sotaneadas</span></div>
         </div>
       </div>
 
@@ -743,146 +743,23 @@
         </div>
       </div>
 
-      <div class="latest-ep reveal">
+      <div class="latest-ep reveal" id="latest-ep">
         <p class="u-eyebrow" style="margin-bottom:16px;">Mirá la última Sotaneada</p>
         <div class="latest-ep-grid">
           <div class="latest-ep-player">
-            <iframe src="https://www.youtube.com/embed/x7Hi7knZQgo" title="Sotaneada #11: La Banda de Carlitos y Euge Quevedo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            <iframe id="latest-ep-iframe" src="" title="Última Sotaneada" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
           </div>
           <div class="latest-ep-info">
-            <span class="latest-ep-badge">Sotaneada #11</span>
-            <h3>La Banda de Carlitos y Euge Quevedo</h3>
-            <p>40:53 · Programa completo en YouTube</p>
+            <span class="latest-ep-badge" id="latest-ep-badge"></span>
+            <h3 id="latest-ep-title"></h3>
+            <p id="latest-ep-meta"></p>
           </div>
         </div>
       </div>
 
       <div class="carousel reveal">
       <button class="car-nav car-prev" aria-label="Programas anteriores"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      <div class="carousel-track episode-grid" id="episode-track">
-
-        <a class="ep-card" href="https://www.youtube.com/watch?v=x7Hi7knZQgo" target="_blank" rel="noopener">
-          <div class="ep-thumb">
-            <span class="ep-tag">#11</span>
-            <img src="assets/thumbs/ep11.jpg" alt="Sotaneada 11: La Banda de Carlitos y Euge Quevedo" loading="lazy">
-          </div>
-          <div class="ep-body">
-            <p class="ep-num">40:53</p>
-            <p class="ep-title">La Banda de Carlitos y Euge Quevedo</p>
-          </div>
-        </a>
-
-        <a class="ep-card" href="https://www.youtube.com/watch?v=akyptOcqPlU" target="_blank" rel="noopener">
-          <div class="ep-thumb">
-            <span class="ep-tag">#10</span>
-            <img src="assets/thumbs/ep10.jpg" alt="Sotaneada 10: Maximiliano Artista" loading="lazy">
-          </div>
-          <div class="ep-body">
-            <p class="ep-num">29:20</p>
-            <p class="ep-title">Maximiliano Artista</p>
-          </div>
-        </a>
-
-        <a class="ep-card" href="https://www.youtube.com/watch?v=o6Kz9N7-2xc" target="_blank" rel="noopener">
-          <div class="ep-thumb">
-            <span class="ep-tag">#9</span>
-            <img src="assets/thumbs/ep09.jpg" alt="Sotaneada 9: El Toro Quevedo" loading="lazy">
-          </div>
-          <div class="ep-body">
-            <p class="ep-num">33:17</p>
-            <p class="ep-title">El Toro Quevedo</p>
-          </div>
-        </a>
-
-        <a class="ep-card" href="https://www.youtube.com/watch?v=SSaR61YTRuA" target="_blank" rel="noopener">
-          <div class="ep-thumb">
-            <span class="ep-tag">#8</span>
-            <img src="assets/thumbs/ep08.jpg" alt="Sotaneada 8: Los Herrera" loading="lazy">
-          </div>
-          <div class="ep-body">
-            <p class="ep-num">36:29</p>
-            <p class="ep-title">Los Herrera</p>
-          </div>
-        </a>
-
-        <a class="ep-card" href="https://www.youtube.com/watch?v=_xfNE3pwW2k" target="_blank" rel="noopener">
-          <div class="ep-thumb">
-            <span class="ep-tag">#7</span>
-            <img src="assets/thumbs/ep07.jpg" alt="Sotaneada 7: El Tano Romero" loading="lazy">
-          </div>
-          <div class="ep-body">
-            <p class="ep-num">33:44</p>
-            <p class="ep-title">El Tano Romero</p>
-          </div>
-        </a>
-
-        <a class="ep-card" href="https://www.youtube.com/watch?v=myCpTpnXlQs" target="_blank" rel="noopener">
-          <div class="ep-thumb">
-            <span class="ep-tag">#6</span>
-            <img src="assets/thumbs/ep06.jpg" alt="Sotaneada 6: Cachumba" loading="lazy">
-          </div>
-          <div class="ep-body">
-            <p class="ep-num">23:49</p>
-            <p class="ep-title">Cachumba</p>
-          </div>
-        </a>
-
-        <a class="ep-card" href="https://www.youtube.com/watch?v=PAoR3jIbhp8" target="_blank" rel="noopener">
-          <div class="ep-thumb">
-            <span class="ep-tag">#5</span>
-            <img src="assets/thumbs/ep05.jpg" alt="Sotaneada 5: Dale Q' Va" loading="lazy">
-          </div>
-          <div class="ep-body">
-            <p class="ep-num">42:23</p>
-            <p class="ep-title">Dale Q' Va</p>
-          </div>
-        </a>
-
-        <a class="ep-card" href="https://www.youtube.com/watch?v=JR01kTGX5Qw" target="_blank" rel="noopener">
-          <div class="ep-thumb">
-            <span class="ep-tag">#4</span>
-            <img src="assets/thumbs/ep04.jpg" alt="Sotaneada 4: Ale Ceberio" loading="lazy">
-          </div>
-          <div class="ep-body">
-            <p class="ep-num">29:13</p>
-            <p class="ep-title">Ale Ceberio</p>
-          </div>
-        </a>
-
-        <a class="ep-card" href="https://www.youtube.com/watch?v=JPtI71EWNVA" target="_blank" rel="noopener">
-          <div class="ep-thumb">
-            <span class="ep-tag">#3</span>
-            <img src="assets/thumbs/ep03.jpg" alt="Sotaneada 3: La Pepa Brizuela" loading="lazy">
-          </div>
-          <div class="ep-body">
-            <p class="ep-num">37:50</p>
-            <p class="ep-title">La Pepa Brizuela</p>
-          </div>
-        </a>
-
-        <a class="ep-card" href="https://www.youtube.com/watch?v=1l4ES1pe6sM" target="_blank" rel="noopener">
-          <div class="ep-thumb">
-            <span class="ep-tag">#2</span>
-            <img src="assets/thumbs/ep02.jpg" alt="Sotaneada 2: Damián Córdoba" loading="lazy">
-          </div>
-          <div class="ep-body">
-            <p class="ep-num">39:26</p>
-            <p class="ep-title">Damián Córdoba</p>
-          </div>
-        </a>
-
-        <a class="ep-card" href="https://www.youtube.com/watch?v=IWVoqGg7sEw" target="_blank" rel="noopener">
-          <div class="ep-thumb">
-            <span class="ep-tag">#1</span>
-            <img src="assets/thumbs/ep01.jpg" alt="Sotaneada 1: Chino Herrera" loading="lazy">
-          </div>
-          <div class="ep-body">
-            <p class="ep-num">31:48</p>
-            <p class="ep-title">Chino Herrera</p>
-          </div>
-        </a>
-
-      </div>
+      <div class="carousel-track episode-grid" id="episode-track"></div>
       <button class="car-nav car-next" aria-label="Programas siguientes"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
 
@@ -1112,6 +989,67 @@
       track.scrollBy({ left: track.clientWidth * 0.85, behavior: 'smooth' });
     });
   });
+
+  function renderEpisodes(episodes){
+    if (!episodes || !episodes.length) return;
+
+    var statEl = document.getElementById('stat-episodes');
+    if (statEl) statEl.textContent = String(episodes.length);
+
+    var latest = episodes[0];
+    var latestIframe = document.getElementById('latest-ep-iframe');
+    var latestBadge = document.getElementById('latest-ep-badge');
+    var latestTitle = document.getElementById('latest-ep-title');
+    var latestMeta = document.getElementById('latest-ep-meta');
+    if (latestIframe) latestIframe.src = 'https://www.youtube.com/embed/' + latest.videoId;
+    if (latestBadge) latestBadge.textContent = 'Sotaneada #' + latest.num;
+    if (latestTitle) latestTitle.textContent = latest.title;
+    if (latestMeta) latestMeta.textContent = latest.duration + ' · Programa completo en YouTube';
+
+    var track = document.getElementById('episode-track');
+    if (!track) return;
+    var frag = document.createDocumentFragment();
+    episodes.forEach(function(ep){
+      var a = document.createElement('a');
+      a.className = 'ep-card';
+      a.href = 'https://www.youtube.com/watch?v=' + ep.videoId;
+      a.target = '_blank';
+      a.rel = 'noopener';
+
+      var thumb = document.createElement('div');
+      thumb.className = 'ep-thumb';
+      var tag = document.createElement('span');
+      tag.className = 'ep-tag';
+      tag.textContent = '#' + ep.num;
+      var img = document.createElement('img');
+      img.src = 'https://i.ytimg.com/vi/' + ep.videoId + '/hqdefault.jpg';
+      img.alt = 'Sotaneada ' + ep.num + ': ' + ep.title;
+      img.loading = 'lazy';
+      thumb.appendChild(tag);
+      thumb.appendChild(img);
+
+      var body = document.createElement('div');
+      body.className = 'ep-body';
+      var num = document.createElement('p');
+      num.className = 'ep-num';
+      num.textContent = ep.duration;
+      var title = document.createElement('p');
+      title.className = 'ep-title';
+      title.textContent = ep.title;
+      body.appendChild(num);
+      body.appendChild(title);
+
+      a.appendChild(thumb);
+      a.appendChild(body);
+      frag.appendChild(a);
+    });
+    track.appendChild(frag);
+  }
+
+  fetch('episodes.json', { cache: 'no-cache' })
+    .then(function(r){ return r.json(); })
+    .then(renderEpisodes)
+    .catch(function(err){ console.error('No se pudieron cargar los episodios', err); });
 
   var GALLERY_COUNT = 11;
   var galleryGrid = document.getElementById('gallery-grid');
