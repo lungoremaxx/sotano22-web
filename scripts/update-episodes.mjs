@@ -7,6 +7,30 @@ import { readFile, writeFile } from "node:fs/promises";
 const CHANNEL_ID = "UCP3niiaRzE22Ao80dEagvYw";
 const EPISODES_PATH = new URL("../episodes.json", import.meta.url);
 const TITLE_RE = /sotaneada\s*#?\s*(\d+)\s*:\s*(.+)/i;
+const BROWSER_HEADERS = {
+  "User-Agent":
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+  "Accept-Language": "es-AR,es;q=0.9,en;q=0.8",
+};
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function fetchWithRetry(url, attempts = 3) {
+  let lastErr;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      const res = await fetch(url, { headers: BROWSER_HEADERS });
+      if (res.ok) return res;
+      lastErr = new Error(`respondió ${res.status}`);
+    } catch (err) {
+      lastErr = err;
+    }
+    if (i < attempts - 1) await sleep(2000 * (i + 1));
+  }
+  throw lastErr;
+}
 
 function cleanGuestName(raw) {
   return raw.replace(/\s+en\s+s[oó]tano\s*22\s*$/i, "").trim();
@@ -22,8 +46,7 @@ function formatDuration(totalSeconds) {
 }
 
 async function fetchFeedEntries() {
-  const res = await fetch(`https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`);
-  if (!res.ok) throw new Error(`Feed RSS respondió ${res.status}`);
+  const res = await fetchWithRetry(`https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`);
   const xml = await res.text();
   const entries = [];
   const entryRe = /<entry>([\s\S]*?)<\/entry>/g;
@@ -48,10 +71,7 @@ function decodeXml(s) {
 }
 
 async function fetchDuration(videoId) {
-  const res = await fetch(`https://www.youtube.com/watch?v=${videoId}`, {
-    headers: { "User-Agent": "Mozilla/5.0" },
-  });
-  if (!res.ok) throw new Error(`Watch page respondió ${res.status}`);
+  const res = await fetchWithRetry(`https://www.youtube.com/watch?v=${videoId}`);
   const html = await res.text();
   const m = html.match(/"lengthSeconds":"(\d+)"/);
   if (!m) throw new Error("No se encontró lengthSeconds");
