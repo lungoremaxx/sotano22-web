@@ -24,12 +24,15 @@ jobs:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: node scripts/update-episodes.mjs
 
-      - name: Actualizar suscriptores de YouTube
+      - name: Actualizar suscriptores de YouTube y seguidores de Instagram
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          META_PAGE_TOKEN: ${{ secrets.META_PAGE_TOKEN }}
         run: node scripts/update-stats.mjs
 
+      # Corre aunque falle un paso anterior, para no perder lo que sí se actualizó
       - name: Commitear y pushear si hay cambios
+        if: ${{ !cancelled() }}
         run: |
           if git diff --quiet -- episodes.json stats.json; then
             echo "Sin cambios."
