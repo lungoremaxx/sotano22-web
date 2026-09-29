@@ -24,14 +24,19 @@ jobs:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: node scripts/update-episodes.mjs
 
+      - name: Actualizar suscriptores de YouTube
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: node scripts/update-stats.mjs
+
       - name: Commitear y pushear si hay cambios
         run: |
-          if git diff --quiet -- episodes.json; then
+          if git diff --quiet -- episodes.json stats.json; then
             echo "Sin cambios."
             exit 0
           fi
           git config user.name "sotano22-bot"
           git config user.email "actions@github.com"
-          git add episodes.json
-          git commit -m "Actualiza episodes.json con nuevas Sotaneadas"
+          git add episodes.json stats.json
+          git commit -m "Actualiza episodios y stats"
           git push

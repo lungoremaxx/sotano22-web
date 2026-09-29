@@ -746,8 +746,8 @@
         </div>
 
         <div class="stat-strip">
-          <div class="stat"><b>235K</b><span>Seguidores IG</span></div>
-          <div class="stat"><b>69,6K</b><span>Suscriptores YT</span></div>
+          <div class="stat"><b id="stat-ig">235K</b><span>Seguidores IG</span></div>
+          <div class="stat"><b id="stat-yt">69,6K</b><span>Suscriptores YT</span></div>
           <div class="stat"><b id="stat-episodes">11</b><span>Sotaneadas</span></div>
         </div>
       </div>
@@ -1091,6 +1091,26 @@
     .then(function(r){ return r.json(); })
     .then(renderEpisodes)
     .catch(function(err){ console.error('No se pudieron cargar los episodios', err); });
+
+  function formatCompact(n){
+    if (n < 1000) return String(n);
+    var k = n / 1000;
+    var rounded = Math.round(k * 10) / 10;
+    var text = (rounded % 1 === 0) ? String(Math.round(rounded)) : String(rounded).replace('.', ',');
+    return text + 'K';
+  }
+
+  function renderStats(stats){
+    var igEl = document.getElementById('stat-ig');
+    var ytEl = document.getElementById('stat-yt');
+    if (igEl && stats.instagram_followers) igEl.textContent = formatCompact(stats.instagram_followers);
+    if (ytEl && stats.youtube_subscribers) ytEl.textContent = formatCompact(stats.youtube_subscribers);
+  }
+
+  fetch('stats.json', { cache: 'no-cache' })
+    .then(function(r){ return r.json(); })
+    .then(renderStats)
+    .catch(function(err){ console.error('No se pudieron cargar las stats', err); });
 
   var GALLERY_COUNT = 10;
   var galleryGrid = document.getElementById('gallery-grid');
