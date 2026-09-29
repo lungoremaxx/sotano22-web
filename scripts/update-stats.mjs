@@ -93,7 +93,7 @@ async function main() {
 
 // El token de pagina no vence, pero Meta corta el acceso a datos a los 90 dias
 // (data_access_expires_at). Avisamos con tiempo haciendo fallar el job, asi
-// GitHub manda mail. Se renueva con ../configurar-token-instagram.sh (fuera del repo).
+// GitHub manda mail. Se renueva con el script "Renovar token Instagram" (fuera del repo).
 const EXPIRY_WARNING_DAYS = 21;
 
 async function metaTokenHealthy() {
