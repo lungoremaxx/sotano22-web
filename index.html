@@ -656,6 +656,21 @@
   }
   .merch-copy h3{ font-size:clamp(1.5rem,3vw,2rem); text-transform:uppercase; margin-bottom:6px; }
   .merch-copy p{ color:var(--muted); max-width:44ch; font-size:.94rem; }
+  .merch-card{
+    position:relative; display:block; flex:0 0 190px; scroll-snap-align:start;
+    text-decoration:none; color:var(--ink);
+    background:#fff; border:1px solid var(--line); overflow:hidden;
+    transition:border-color .2s ease, transform .2s cubic-bezier(.2,.8,.2,1);
+  }
+  .merch-card:hover{ border-color:var(--khaki); transform:translateY(-3px); }
+  .merch-thumb{ aspect-ratio:1/1; overflow:hidden; }
+  .merch-thumb img{ width:100%; height:100%; object-fit:contain; padding:12px; box-sizing:border-box; }
+  .merch-name{
+    padding:10px 14px 14px;
+    font-family:var(--font-mono); font-size:.7rem; letter-spacing:.03em;
+    color:var(--bg); background:#fff;
+  }
+  @media (max-width:560px){ .merch-card{ flex-basis:42vw; } }
 
   /* ---------- footer ---------- */
   footer{ padding-block:clamp(36px,6vw,52px); }
@@ -862,13 +877,19 @@
 
   <section id="merch">
     <div class="wrap">
-      <div class="merch-banner reveal">
-        <div class="merch-copy">
+      <div class="section-head reveal">
+        <div class="section-head-copy">
           <p class="u-eyebrow" style="margin-bottom:8px;">Merch <span class="soon-tag">Próximamente</span></p>
-          <h3>Cápsula Sótano 22</h3>
-          <p>Productos con el sello del sótano. Primera tanda, muy pronto.</p>
+          <h2>Cápsula Sótano 22</h2>
+          <p class="section-note">Productos con el sello del sótano. Primera tanda, muy pronto.</p>
         </div>
-        <a class="btn btn-outline" href="https://www.instagram.com/sotano.22/" target="_blank" rel="noopener">Avisame cuando salga</a>
+        <a class="section-link" href="https://sotano22.mitiendanube.com" target="_blank" rel="noopener">Ver tienda completa →</a>
+      </div>
+
+      <div class="carousel reveal">
+        <button class="car-nav car-prev" aria-label="Productos anteriores"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="carousel-track" id="merch-track"></div>
+        <button class="car-nav car-next" aria-label="Productos siguientes"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
     </div>
   </section>
@@ -1111,6 +1132,41 @@
     .then(function(r){ return r.json(); })
     .then(renderStats)
     .catch(function(err){ console.error('No se pudieron cargar las stats', err); });
+
+  function renderMerch(items){
+    var track = document.getElementById('merch-track');
+    if (!track || !items || !items.length) return;
+    var frag = document.createDocumentFragment();
+    items.forEach(function(item){
+      var a = document.createElement('a');
+      a.className = 'merch-card';
+      a.href = item.url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+
+      var thumb = document.createElement('div');
+      thumb.className = 'merch-thumb';
+      var img = document.createElement('img');
+      img.src = item.image;
+      img.alt = item.name;
+      img.loading = 'lazy';
+      thumb.appendChild(img);
+
+      var name = document.createElement('p');
+      name.className = 'merch-name';
+      name.textContent = item.name;
+
+      a.appendChild(thumb);
+      a.appendChild(name);
+      frag.appendChild(a);
+    });
+    track.appendChild(frag);
+  }
+
+  fetch('merch.json', { cache: 'no-cache' })
+    .then(function(r){ return r.json(); })
+    .then(renderMerch)
+    .catch(function(err){ console.error('No se pudo cargar el merch', err); });
 
   var GALLERY_COUNT = 10;
   var galleryGrid = document.getElementById('gallery-grid');
