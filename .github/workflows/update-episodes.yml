@@ -2,8 +2,10 @@ name: Actualizar Sotaneadas
 
 on:
   schedule:
-    # 01:00 UTC los lunes = 22:00 hora Argentina (UTC-3) los domingos
-    - cron: "0 1 * * 1"
+    # 03:00 y 15:00 UTC = 00:00 y 12:00 hora Argentina (UTC-3), todos los días.
+    # GitHub suele demorar los cron un par de horas; con dos corridas diarias
+    # una Sotaneada nueva aparece en la web en menos de un día.
+    - cron: "0 3,15 * * *"
   workflow_dispatch: {}
 
 permissions:

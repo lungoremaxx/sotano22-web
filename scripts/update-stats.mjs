@@ -3,8 +3,10 @@
 // - seguidores de Instagram, via la Graph API de Meta (secret META_PAGE_TOKEN).
 //   Se leen a traves de la pagina de Facebook "Sotano 22", que tiene vinculada
 //   la cuenta @sotano.22. El token es un token de pagina que no vence.
-// Si falla una de las dos fuentes, igual se guarda la otra y el job termina en error
-// para que se note en GitHub Actions.
+// Si falla YouTube, el job termina en error (GitHub manda mail).
+// Si falla Instagram solo se loguea, salvo que el número lleve más de
+// IG_STALE_DAYS sin actualizarse: ahí el job falla una vez por semana (lunes)
+// para avisar sin mandar un mail en cada corrida.
 
 import { readFile, writeFile } from "node:fs/promises";
 
@@ -13,6 +15,7 @@ const META_PAGE_TOKEN = process.env.META_PAGE_TOKEN;
 const CHANNEL_ID = "UCP3niiaRzE22Ao80dEagvYw";
 const FB_PAGE_ID = "1126812440523412";
 const GRAPH_VERSION = "v26.0";
+const IG_STALE_DAYS = 7;
 const STATS_PATH = new URL("../stats.json", import.meta.url);
 
 async function fetchYoutubeSubscribers() {
@@ -73,6 +76,13 @@ async function main() {
     try {
       const value = await fetcher();
       if (value == null) continue;
+      if (key === "instagram_followers") {
+        const today = new Date().toISOString().slice(0, 10);
+        if (stats.instagram_updated_at !== today) {
+          stats.instagram_updated_at = today;
+          changed = true;
+        }
+      }
       if (stats[key] === value) {
         console.log(`${label} sin cambios (${value}).`);
         continue;
@@ -82,13 +92,29 @@ async function main() {
       changed = true;
     } catch (err) {
       console.error(`Falló ${label}:`, err.message);
-      failed = true;
+      if (key !== "instagram_followers") failed = true;
     }
   }
 
+  if (instagramStaleAlert(stats.instagram_updated_at)) failed = true;
   if (changed) await writeFile(STATS_PATH, JSON.stringify(stats, null, 2) + "\n", "utf8");
   if (META_PAGE_TOKEN && !(await metaTokenHealthy())) failed = true;
   if (failed) process.exit(1);
+}
+
+function instagramStaleAlert(updatedAt) {
+  if (!updatedAt) return false;
+  const days = Math.floor((Date.now() - Date.parse(updatedAt)) / 86_400_000);
+  if (days <= IG_STALE_DAYS) return false;
+  const msg = `ATENCIÓN: seguidores de Instagram sin actualizar hace ${days} días (último OK: ${updatedAt}).`;
+  const now = new Date();
+  const weeklyRun = process.env.GITHUB_EVENT_NAME !== "schedule" || (now.getUTCDay() === 1 && now.getUTCHours() < 12);
+  if (!weeklyRun) {
+    console.log(msg);
+    return false;
+  }
+  console.error(msg);
+  return true;
 }
 
 // El token de pagina no vence, pero Meta corta el acceso a datos a los 90 dias
