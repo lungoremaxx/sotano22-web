@@ -1135,7 +1135,14 @@
 
   function renderMerch(items){
     var track = document.getElementById('merch-track');
-    if (!track || !items || !items.length) return;
+    if (!track) return;
+    if (!items || !items.length) {
+      // Sin productos visibles en Tienda Nube: se oculta la sección y sus links del menú
+      var section = document.getElementById('merch');
+      if (section) section.style.display = 'none';
+      document.querySelectorAll('a[href="#merch"]').forEach(function(a){ a.parentNode.style.display = 'none'; });
+      return;
+    }
     var frag = document.createDocumentFragment();
     items.forEach(function(item){
       var a = document.createElement('a');

@@ -44,4 +44,5 @@ jobs:
           git config user.email "actions@github.com"
           git add episodes.json stats.json
           git commit -m "Actualiza episodios y stats"
+          git pull --rebase
           git push

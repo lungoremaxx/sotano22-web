@@ -1,0 +1,42 @@
+name: Actualizar merch
+
+on:
+  schedule:
+    # Cada 30 minutos: los productos visibles en Tienda Nube se reflejan en la web
+    - cron: "7,37 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-merch
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Sincronizar productos visibles de Tienda Nube
+        env:
+          TIENDANUBE_TOKEN: ${{ secrets.TIENDANUBE_TOKEN }}
+        run: node scripts/update-merch.mjs
+
+      - name: Commitear y pushear si hay cambios
+        run: |
+          if git diff --quiet -- merch.json; then
+            echo "Sin cambios."
+            exit 0
+          fi
+          git config user.name "sotano22-bot"
+          git config user.email "actions@github.com"
+          git add merch.json
+          git commit -m "Actualiza merch desde Tienda Nube"
+          git pull --rebase
+          git push
