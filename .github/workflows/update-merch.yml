@@ -2,8 +2,8 @@ name: Actualizar merch
 
 on:
   schedule:
-    # Cada 30 minutos: los productos visibles en Tienda Nube se reflejan en la web
-    - cron: "7,37 * * * *"
+    # Cada 10 minutos: los productos visibles en Tienda Nube se reflejan en la web
+    - cron: "*/10 * * * *"
   workflow_dispatch: {}
 
 permissions:
