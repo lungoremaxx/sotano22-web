@@ -17,9 +17,18 @@ async function fetchPublishedProducts() {
     url.searchParams.set("per_page", "200");
     url.searchParams.set("page", String(page));
     url.searchParams.set("fields", "id,name,published,canonical_url,images");
+    // La API a veces devuelve una copia cacheada vieja (pasó con fotos nuevas que no
+    // aparecían por días): se fuerza una respuesta fresca.
+    url.searchParams.set("_", String(Date.now()));
 
     const res = await fetch(url, {
-      headers: { Authentication: `bearer ${TOKEN}`, "User-Agent": USER_AGENT },
+      headers: {
+        Authentication: `bearer ${TOKEN}`,
+        "User-Agent": USER_AGENT,
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache",
+      },
+      cache: "no-store",
     });
     // Tienda Nube responde 404 cuando se pide una página más allá de la última
     if (res.status === 404 && page > 1) break;

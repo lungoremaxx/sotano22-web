@@ -656,21 +656,69 @@
   }
   .merch-copy h3{ font-size:clamp(1.5rem,3vw,2rem); text-transform:uppercase; margin-bottom:6px; }
   .merch-copy p{ color:var(--muted); max-width:44ch; font-size:.94rem; }
+  /* slider de merch: 3 a la vista, avanza solo, loop infinito */
+  .merch-slider{ --per:3; --mgap:22px; position:relative; }
+  @media (max-width:900px){ .merch-slider{ --per:2; } }
+  @media (max-width:560px){ .merch-slider{ --per:1.18; --mgap:14px; } }
+  .merch-viewport{ overflow:hidden; padding:10px 2px 18px; margin:-10px -2px -18px; }
+  .merch-rail{ display:flex; gap:var(--mgap); transition:transform .9s cubic-bezier(.65,0,.35,1); will-change:transform; }
+  .merch-rail.is-static{ justify-content:center; }
   .merch-card{
-    position:relative; display:block; flex:0 0 190px; scroll-snap-align:start;
+    position:relative; display:flex; flex-direction:column;
+    flex:0 0 calc((100% - (var(--per) - 1) * var(--mgap)) / var(--per));
     text-decoration:none; color:var(--ink);
-    background:#fff; border:1px solid var(--line); overflow:hidden;
-    transition:border-color .2s ease, transform .2s cubic-bezier(.2,.8,.2,1);
+    background:var(--bg-raised); border:1px solid var(--line); overflow:hidden;
+    transition:border-color .3s ease, transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s ease;
   }
-  .merch-card:hover{ border-color:var(--khaki); transform:translateY(-3px); }
-  .merch-thumb{ aspect-ratio:1/1; overflow:hidden; }
-  .merch-thumb img{ width:100%; height:100%; object-fit:contain; padding:12px; box-sizing:border-box; }
+  .merch-card::after{
+    content:''; position:absolute; left:0; bottom:0; height:2px; width:0;
+    background:var(--accent); transition:width .45s cubic-bezier(.2,.8,.2,1);
+  }
+  .merch-card:hover, .merch-card:focus-visible{
+    border-color:rgba(252,29,0,.55); transform:translateY(-5px);
+    box-shadow:0 22px 44px -22px var(--accent-glow);
+  }
+  .merch-card:hover::after, .merch-card:focus-visible::after{ width:100%; }
+  .merch-stage{
+    position:relative; aspect-ratio:4/5; overflow:hidden;
+    background:radial-gradient(120% 85% at 50% 36%, #f6f1e9 0%, #e4dccf 55%, #c7bcac 100%);
+  }
+  .merch-stage::before{
+    content:''; position:absolute; left:12%; right:12%; bottom:7%; height:16%;
+    background:radial-gradient(closest-side, rgba(252,29,0,.32), rgba(252,29,0,0));
+    filter:blur(8px); transition:opacity .4s ease; opacity:.75;
+  }
+  .merch-card:hover .merch-stage::before{ opacity:1; }
+  .merch-stage img{
+    position:absolute; inset:7%; width:86%; height:86%;
+    object-fit:contain; mix-blend-mode:multiply;
+    transition:transform .7s cubic-bezier(.2,.8,.2,1);
+  }
+  .merch-card:hover .merch-stage img{ transform:scale(1.07) rotate(-2deg); }
+  .merch-num{
+    position:absolute; top:14px; left:16px; z-index:1;
+    font-family:var(--font-mono); font-size:.66rem; letter-spacing:.14em;
+    color:rgba(14,12,11,.55);
+  }
+  .merch-info{
+    display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
+    padding:16px 18px 18px;
+  }
   .merch-name{
-    padding:10px 14px 14px;
-    font-family:var(--font-mono); font-size:.7rem; letter-spacing:.03em;
-    color:var(--bg); background:#fff;
+    font-family:var(--font-display); font-size:clamp(1.35rem,2.2vw,1.75rem);
+    line-height:1; text-transform:uppercase; letter-spacing:.01em;
   }
-  @media (max-width:560px){ .merch-card{ flex-basis:42vw; } }
+  .merch-cta{
+    font-family:var(--font-mono); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--accent); white-space:nowrap; padding-bottom:3px;
+  }
+  .merch-dots{ display:flex; gap:8px; justify-content:center; margin-top:26px; }
+  .merch-dots button{
+    width:22px; height:3px; padding:0; border:0; cursor:pointer;
+    background:var(--line-strong); transition:width .4s ease, background .4s ease;
+  }
+  .merch-dots button.is-active{ width:40px; background:var(--accent); }
+  .merch-slider .car-nav{ top:40%; }
 
   /* ---------- footer ---------- */
   footer{ padding-block:clamp(36px,6vw,52px); }
@@ -886,10 +934,11 @@
         <a class="section-link" href="https://sotano22.mitiendanube.com/productos/" target="_blank" rel="noopener">Ver tienda completa →</a>
       </div>
 
-      <div class="carousel reveal">
+      <div class="merch-slider reveal" id="merch-slider">
         <button class="car-nav car-prev" aria-label="Productos anteriores"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <div class="carousel-track" id="merch-track"></div>
+        <div class="merch-viewport"><div class="merch-rail" id="merch-track"></div></div>
         <button class="car-nav car-next" aria-label="Productos siguientes"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="merch-dots" id="merch-dots"></div>
       </div>
     </div>
   </section>
@@ -1134,8 +1183,9 @@
     .catch(function(err){ console.error('No se pudieron cargar las stats', err); });
 
   function renderMerch(items){
-    var track = document.getElementById('merch-track');
-    if (!track) return;
+    var slider = document.getElementById('merch-slider');
+    var rail = document.getElementById('merch-track');
+    if (!slider || !rail) return;
     if (!items || !items.length) {
       // Sin productos visibles en Tienda Nube: se oculta la sección y sus links del menú
       var section = document.getElementById('merch');
@@ -1143,31 +1193,96 @@
       document.querySelectorAll('a[href="#merch"]').forEach(function(a){ a.parentNode.style.display = 'none'; });
       return;
     }
-    var frag = document.createDocumentFragment();
-    items.forEach(function(item){
+
+    var n = items.length;
+    function card(item, i, clone){
       var a = document.createElement('a');
       a.className = 'merch-card';
       a.href = item.url;
       a.target = '_blank';
       a.rel = 'noopener';
-
-      var thumb = document.createElement('div');
-      thumb.className = 'merch-thumb';
-      var img = document.createElement('img');
+      if (clone) { a.setAttribute('aria-hidden', 'true'); a.tabIndex = -1; }
+      a.innerHTML =
+        '<div class="merch-stage"><span class="merch-num"></span><img alt="" loading="lazy"></div>' +
+        '<div class="merch-info"><p class="merch-name"></p><span class="merch-cta">Ver producto →</span></div>';
+      a.querySelector('.merch-num').textContent = String(i + 1).padStart(2, '0') + ' / ' + String(n).padStart(2, '0');
+      var img = a.querySelector('img');
       img.src = item.image;
       img.alt = item.name;
-      img.loading = 'lazy';
-      thumb.appendChild(img);
+      a.querySelector('.merch-name').textContent = item.name;
+      return a;
+    }
 
-      var name = document.createElement('p');
-      name.className = 'merch-name';
-      name.textContent = item.name;
+    var prev = slider.querySelector('.car-prev');
+    var next = slider.querySelector('.car-next');
+    var dotsEl = document.getElementById('merch-dots');
+    var perView = function(){ return parseFloat(getComputedStyle(slider).getPropertyValue('--per')) || 3; };
 
-      a.appendChild(thumb);
-      a.appendChild(name);
-      frag.appendChild(a);
+    // Pocos productos: se muestran quietos y centrados, sin flechas ni autoplay
+    if (n <= Math.floor(perView())) {
+      items.forEach(function(it, i){ rail.appendChild(card(it, i, false)); });
+      rail.classList.add('is-static');
+      prev.style.display = next.style.display = 'none';
+      return;
+    }
+
+    // Loop infinito: [copias][originales][copias]; se arranca en los originales
+    [true, false, true].forEach(function(clone){
+      items.forEach(function(it, i){ rail.appendChild(card(it, i, clone)); });
     });
-    track.appendChild(frag);
+    var idx = n;
+    var dots = items.map(function(_, i){
+      var d = document.createElement('button');
+      d.setAttribute('aria-label', 'Ver ' + items[i].name);
+      d.addEventListener('click', function(){ go(n + i); restart(); });
+      dotsEl.appendChild(d);
+      return d;
+    });
+
+    function step(){
+      var first = rail.children[0];
+      return first.getBoundingClientRect().width + parseFloat(getComputedStyle(rail).columnGap || 0);
+    }
+    function place(animate){
+      rail.style.transition = animate ? '' : 'none';
+      rail.style.transform = 'translateX(' + (-idx * step()) + 'px)';
+      var active = ((idx - n) % n + n) % n;
+      dots.forEach(function(d, i){ d.classList.toggle('is-active', i === active); });
+      if (!animate) { void rail.offsetWidth; rail.style.transition = ''; }
+    }
+    function go(i){ idx = i; place(true); }
+    rail.addEventListener('transitionend', function(e){
+      if (e.target !== rail) return;
+      if (idx >= 2 * n) { idx -= n; place(false); }
+      else if (idx < n) { idx += n; place(false); }
+    });
+
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var timer = null, paused = false;
+    function restart(){
+      clearInterval(timer);
+      if (!reduce) timer = setInterval(function(){ if (!paused && !document.hidden) go(idx + 1); }, 3200);
+    }
+    prev.addEventListener('click', function(){ go(idx - 1); restart(); });
+    next.addEventListener('click', function(){ go(idx + 1); restart(); });
+    slider.addEventListener('mouseenter', function(){ paused = true; });
+    slider.addEventListener('mouseleave', function(){ paused = false; });
+    slider.addEventListener('focusin', function(){ paused = true; });
+    slider.addEventListener('focusout', function(){ paused = false; });
+
+    // deslizar con el dedo
+    var x0 = null;
+    rail.addEventListener('touchstart', function(e){ x0 = e.touches[0].clientX; paused = true; }, { passive: true });
+    rail.addEventListener('touchend', function(e){
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 40) { go(idx + (dx < 0 ? 1 : -1)); restart(); }
+      x0 = null; paused = false;
+    });
+
+    window.addEventListener('resize', function(){ place(false); });
+    place(false);
+    restart();
   }
 
   fetch('merch.json', { cache: 'no-cache' })
