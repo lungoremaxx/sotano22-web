@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cápsula Sótano 22 — Merch oficial</title>
+<meta name="description" content="La merch oficial de Sótano 22, el streaming de Nico Sattler. Productos con el sello del sótano, con envío a todo el país.">
+<meta name="theme-color" content="#0e0c0b">
+<link rel="canonical" href="https://sotano22.com.ar/capsula/">
+<link rel="icon" type="image/png" href="../assets/s22-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sótano 22">
+<meta property="og:url" content="https://sotano22.com.ar/capsula/">
+<meta property="og:title" content="Cápsula Sótano 22 — Merch oficial">
+<meta property="og:description" content="Productos con el sello del sótano. Entrá, elegí y llevate el tuyo.">
+<meta property="og:image" content="https://sotano22.com.ar/assets/og-capsula.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  @font-face{ font-family:'Adieu'; src:url('../assets/adieu.ttf') format('truetype'); font-weight:400; font-display:swap; }
+  :root{
+    --bg:#0e0c0b; --bg-raised:#18140f; --bg-raised-2:#1f1a14;
+    --line:rgba(241,237,230,.09); --line-strong:rgba(241,237,230,.20);
+    --ink:#f5f1ea; --muted:#b3a89a; --khaki:#af9875;
+    --accent:#fc1d00; --accent-2:#ec432e; --accent-glow:rgba(252,29,0,.38);
+    --font-display:'Bebas Neue','Oswald',sans-serif;
+    --font-body:'Adieu','Helvetica Neue',Arial,sans-serif;
+    --font-mono:'JetBrains Mono',ui-monospace,'SFMono-Regular',monospace;
+    color-scheme:dark;
+  }
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+  body{ margin:0; background:var(--bg); color:var(--ink); font-family:var(--font-body); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  a{ color:inherit; }
+  img{ display:block; max-width:100%; }
+  h1,h2{ font-family:var(--font-display); font-weight:400; letter-spacing:.01em; margin:0; text-wrap:balance; }
+  p{ margin:0; }
+  .wrap{ max-width:1220px; margin:0 auto; padding-inline:clamp(16px,5vw,56px); }
+  .eyebrow{ display:flex; align-items:center; gap:10px; font-family:var(--font-mono); font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--khaki); }
+  .eyebrow::before{ content:""; width:22px; height:1px; background:var(--khaki); }
+
+  .btn{ display:inline-flex; align-items:center; gap:10px; padding:15px 28px; font-family:var(--font-mono); font-size:.78rem; letter-spacing:.12em; text-transform:uppercase; text-decoration:none; border-radius:3px; transition:transform .18s cubic-bezier(.2,.8,.2,1), background .15s ease, box-shadow .18s ease, border-color .15s ease; }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-primary{ background:var(--accent); color:#fff6f3; border:1px solid var(--accent); }
+  .btn-primary:hover{ background:var(--accent-2); border-color:var(--accent-2); box-shadow:0 10px 24px -8px var(--accent-glow); }
+  .btn-outline{ background:transparent; color:var(--ink); border:1px solid var(--line-strong); }
+  .btn-outline:hover{ border-color:var(--khaki); color:var(--khaki); }
+
+  /* encabezado */
+  .top{ position:sticky; top:0; z-index:10; background:rgba(14,12,11,.88); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  .top .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; height:64px; }
+  .top img{ height:26px; width:auto; }
+  .top-link{ font-family:var(--font-mono); font-size:.68rem; letter-spacing:.16em; text-transform:uppercase; color:var(--khaki); text-decoration:none; white-space:nowrap; }
+  .top-link:hover{ color:var(--ink); }
+
+  /* hero */
+  .hero{ position:relative; padding:clamp(56px,10vw,110px) 0 clamp(36px,6vw,64px); overflow:hidden; }
+  .hero::before{ content:""; position:absolute; left:50%; top:-30%; width:min(900px,120vw); aspect-ratio:1; transform:translateX(-50%); background:radial-gradient(closest-side, rgba(252,29,0,.22), rgba(252,29,0,0)); pointer-events:none; }
+  .hero .wrap{ position:relative; display:flex; flex-direction:column; align-items:flex-start; gap:18px; }
+  .hero h1{ font-size:clamp(3.4rem,11vw,8rem); line-height:.88; text-transform:uppercase; }
+  .hero h1 span{ color:var(--accent); }
+  .hero p{ color:var(--muted); max-width:46ch; font-size:clamp(.95rem,1.6vw,1.1rem); }
+  .hero .actions{ display:flex; flex-wrap:wrap; gap:12px; margin-top:8px; }
+
+  /* grilla de productos */
+  .grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; padding-bottom:clamp(48px,8vw,90px); }
+  @media (max-width:900px){ .grid{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; } }
+  @media (max-width:420px){ .grid{ gap:12px; } }
+  .card{ position:relative; display:flex; flex-direction:column; text-decoration:none; color:var(--ink); background:var(--bg-raised); border:1px solid var(--line); overflow:hidden; opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s cubic-bezier(.2,.8,.2,1), border-color .3s ease, box-shadow .4s ease; }
+  .card.in{ opacity:1; transform:none; }
+  .card::after{ content:''; position:absolute; left:0; bottom:0; height:2px; width:0; background:var(--accent); transition:width .45s cubic-bezier(.2,.8,.2,1); }
+  .card:hover, .card:focus-visible{ border-color:rgba(252,29,0,.55); transform:translateY(-5px); box-shadow:0 22px 44px -22px var(--accent-glow); }
+  .card:hover::after, .card:focus-visible::after{ width:100%; }
+  .stage{ position:relative; aspect-ratio:4/5; overflow:hidden; background:radial-gradient(120% 85% at 50% 36%, #f6f1e9 0%, #e4dccf 55%, #c7bcac 100%); }
+  .stage::before{ content:''; position:absolute; left:12%; right:12%; bottom:7%; height:16%; background:radial-gradient(closest-side, rgba(252,29,0,.32), rgba(252,29,0,0)); filter:blur(8px); opacity:.75; transition:opacity .4s ease; }
+  .card:hover .stage::before{ opacity:1; }
+  .stage img{ position:absolute; inset:7%; width:86%; height:86%; object-fit:contain; mix-blend-mode:multiply; transition:transform .7s cubic-bezier(.2,.8,.2,1); }
+  .card:hover .stage img{ transform:scale(1.07) rotate(-2deg); }
+  .num{ position:absolute; top:14px; left:16px; z-index:1; font-family:var(--font-mono); font-size:.66rem; letter-spacing:.14em; color:rgba(14,12,11,.55); }
+  .info{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; padding:16px 18px 18px; }
+  .name{ font-family:var(--font-display); font-size:clamp(1.25rem,2.4vw,1.8rem); line-height:1; text-transform:uppercase; }
+  .cta{ font-family:var(--font-mono); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); white-space:nowrap; padding-bottom:3px; }
+  @media (max-width:560px){
+    .info{ flex-direction:column; align-items:flex-start; gap:8px; padding:12px 12px 14px; }
+    .num{ top:10px; left:10px; font-size:.58rem; }
+  }
+  .empty{ grid-column:1/-1; padding:40px 0; color:var(--muted); }
+
+  /* cierre */
+  .closing{ border-top:1px solid var(--line); padding:clamp(56px,9vw,100px) 0; text-align:center; position:relative; overflow:hidden; }
+  .closing::before{ content:""; position:absolute; left:50%; bottom:-60%; width:min(800px,120vw); aspect-ratio:1; transform:translateX(-50%); background:radial-gradient(closest-side, rgba(252,29,0,.16), rgba(252,29,0,0)); pointer-events:none; }
+  .closing .wrap{ position:relative; display:flex; flex-direction:column; align-items:center; gap:22px; }
+  .closing h2{ font-size:clamp(2.4rem,7vw,4.6rem); line-height:.95; text-transform:uppercase; }
+  .closing h2 span{ color:var(--accent); }
+  footer{ border-top:1px solid var(--line); padding:26px 0; font-family:var(--font-mono); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+  footer .wrap{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; }
+  footer a{ text-decoration:none; }
+  footer a:hover{ color:var(--ink); }
+  @media (prefers-reduced-motion: reduce){ .card{ opacity:1; transform:none; transition:none; } }
+</style>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a href="../" aria-label="Sótano 22 — Inicio"><img src="../assets/logo-blanco.png" alt="Sótano 22"></a>
+      <a class="top-link" href="https://sotano22.mitiendanube.com/productos/" target="_blank" rel="noopener">Ir a la tienda →</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Merch oficial</p>
+        <h1>Cápsula<br>Sótano <span>22</span></h1>
+        <p>Productos con el sello del sótano. Elegí el tuyo y te lo mandamos a cualquier punto del país.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://sotano22.mitiendanube.com/productos/" target="_blank" rel="noopener">Comprar en la tienda →</a>
+          <a class="btn btn-outline" href="#productos">Ver productos</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="productos">
+      <div class="wrap">
+        <div class="grid" id="grid"></div>
+      </div>
+    </section>
+
+    <section class="closing">
+      <div class="wrap">
+        <p class="eyebrow">Sótano 22</p>
+        <h2>Todo empieza<br>allá <span>abajo</span></h2>
+        <a class="btn btn-primary" href="https://sotano22.mitiendanube.com/productos/" target="_blank" rel="noopener">Ver la tienda completa →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© Sótano 22 — Bajá que empieza</span>
+      <a href="../">Volver a sotano22.com.ar →</a>
+    </div>
+  </footer>
+
+<script>
+  // Los productos salen de merch.json, que se sincroniza solo con los productos
+  // visibles de Tienda Nube (scripts/update-merch.mjs).
+  (function(){
+    var grid = document.getElementById('grid');
+    function render(items){
+      if (!items || !items.length) {
+        grid.innerHTML = '<p class="empty">La primera tanda está en camino. Mientras tanto, pasá por la tienda.</p>';
+        return;
+      }
+      var n = items.length;
+      items.forEach(function(item, i){
+        var a = document.createElement('a');
+        a.className = 'card';
+        a.href = item.url;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.innerHTML = '<div class="stage"><span class="num"></span><img alt="" loading="lazy"></div>' +
+                      '<div class="info"><p class="name"></p><span class="cta">Ver producto →</span></div>';
+        a.querySelector('.num').textContent = String(i + 1).padStart(2, '0') + ' / ' + String(n).padStart(2, '0');
+        var img = a.querySelector('img');
+        img.src = item.image;
+        img.alt = item.name;
+        a.querySelector('.name').textContent = item.name;
+        a.style.transitionDelay = (i % 3) * 90 + 'ms';
+        grid.appendChild(a);
+      });
+      // aparición escalonada al hacer scroll
+      var cards = grid.querySelectorAll('.card');
+      if (!('IntersectionObserver' in window)) { cards.forEach(function(c){ c.classList.add('in'); }); return; }
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            // después de aparecer, el hover no hereda la demora
+            setTimeout(function(){ e.target.style.transitionDelay = ''; }, 800);
+            io.unobserve(e.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -8% 0px' });
+      cards.forEach(function(c){ io.observe(c); });
+    }
+    fetch('../merch.json', { cache: 'no-cache' })
+      .then(function(r){ return r.json(); })
+      .then(render)
+      .catch(function(){ render([]); });
+  })();
+</script>
+</body>
+</html>
