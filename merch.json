@@ -1,7 +1,7 @@
 [
   {
     "name": "Piluso",
-    "image": "https://dcdn-us.mitiendanube.com/stores/008/306/408/products/01-frente-cf7f2950794992c1db17927755159601-1024-1024.jpg",
+    "image": "https://dcdn-us.mitiendanube.com/stores/008/306/408/products/01-frente-301e56b46d21d66a1017927780222152-1024-1024.jpg",
     "url": "https://sotano22.mitiendanube.com/productos/piluso-sotano-22/"
   },
   {
@@ -18,6 +18,11 @@
     "name": "Botella",
     "image": "https://dcdn-us.mitiendanube.com/stores/008/306/408/products/01-frente-5625e04d916e4d2a6617925130842470-1024-1024.jpg",
     "url": "https://sotano22.mitiendanube.com/productos/botella-sotano-22/"
+  },
+  {
+    "name": "Set de stickers",
+    "image": "https://dcdn-us.mitiendanube.com/stores/008/306/408/products/stickers-0e983c9ac442c7856117906529668441-1024-1024.jpg",
+    "url": "https://sotano22.mitiendanube.com/productos/set-de-stickers-sotano-22/"
   },
   {
     "name": "Jarra térmica",
